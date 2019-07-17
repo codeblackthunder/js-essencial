@@ -84,7 +84,7 @@ this._operation.pop();
 
     addOperation(value){
         // metodo utilizado para acrescenta no array operation o valorde cada operação por exemplo cada botao digitado o valor sera iniciado neste array
-        
+
         this._operation.push(value);
         console.log(this._operation);
     }
@@ -147,6 +147,11 @@ this._operation.pop();
                 let textBtn = btn.className.baseVal.replace("btn-", "");
                this.execBtn(textBtn);
             }); //fim evento
+
+            //Trocando o estilo da nossa mão quando passamos o mouse por cima
+            this.addEventListenerAll(btn, "mouseover mouseup mousedown", e=>{
+                btn.style.cursor = "pointer";
+              });
 
         }); // fim foreach
     }
