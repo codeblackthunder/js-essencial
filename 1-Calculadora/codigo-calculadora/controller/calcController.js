@@ -68,20 +68,32 @@ class CalcController {
 
     // usamos o innerHTML para modificar e mostrar o valor de nosso elemento
 
+    addEventListenerAll(element, events, fn) {
+
+        events.split(' ').forEach(event => {
+
+            element.addEventListener(event, fn, false);
+
+        });
+
+    }
     initButtonsEvents() {
         //Quando há vários elementos em que nosso seletor indica,é necessário utilizar o querySelectorAll
         let buttons = document.querySelectorAll("#buttons>g,#parts>g");
         //quanndo utilizamos o querySelectorAll retorna um array,sendo assim é necessário percorre-lo
         //com o forEach percorremos nosso array definindo uma variavel e com ela definimos um evento
-        buttons.forEach(btn =>{
+        buttons.forEach((btn, index) => {
             //o e seria toda a ação ocorrida no evento...
-          btn.addEventListener('click',e=>{
-              //utilizado para retornar o nome da classe.
-                console.log(btn.className.baseVal.replace("btn-","")); // comando replace é usado para substituir um texto ou seja neste comando estamos trocando o btn- por nada("")
-    
-            })
-        })
+            this.addEventListenerAll(btn, 'click drag mouseover', e => {
+                console.log(btn.className.baseVal.replace("btn-", ""));
+            }); //fim evento
+
+        }); // fim foreach
     }
+
+
+
+
 
     get displayCalc() {
         return this._displayCalcEl.innerHTML;
