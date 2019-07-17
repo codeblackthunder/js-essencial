@@ -8,4 +8,4 @@ Model: Acessar os dados
 */
 
 // instancia um objeto calculadora seguindo o molde da classe CalcController
-let calculadora = new CalcController;
+let calculator = new CalcController;
