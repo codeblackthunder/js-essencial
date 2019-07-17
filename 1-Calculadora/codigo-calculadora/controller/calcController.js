@@ -21,6 +21,7 @@ class CalcController {
         this._dateEl = document.querySelector("#data");
 
         this.initialize();
+        this.initButtonsEvents();
     }
 
     initialize() {
@@ -36,12 +37,12 @@ class CalcController {
     //metodo usado para retornar data formatada utilizando o metodo toLocalDate/TimeString
     setDisplayDateTime() {
         this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
-        this.displayDate = this.currentDate.toLocaleDateString(this._locale,{
+        this.displayDate = this.currentDate.toLocaleDateString(this._locale, {
             //formatando as datas com os seguintes metodos
             //Incluir anotações na documentação https://docs.w3cub.com/javascript/global_objects/date/tolocaledatestring/
-            day:"2-digit",
-            month:"long",
-            year:"numeric"
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
         });
     }
 
@@ -67,6 +68,20 @@ class CalcController {
 
     // usamos o innerHTML para modificar e mostrar o valor de nosso elemento
 
+    initButtonsEvents() {
+        //Quando há vários elementos em que nosso seletor indica,é necessário utilizar o querySelectorAll
+        let buttons = document.querySelectorAll("#buttons>g,#parts>g");
+        //quanndo utilizamos o querySelectorAll retorna um array,sendo assim é necessário percorre-lo
+        //com o forEach percorremos nosso array definindo uma variavel e com ela definimos um evento
+        buttons.forEach(btn =>{
+            //o e seria toda a ação ocorrida no evento...
+          btn.addEventListener('click',e=>{
+              //utilizado para retornar o nome da classe.
+                console.log(btn.className.baseVal.replace("btn-","")); // comando replace é usado para substituir um texto ou seja neste comando estamos trocando o btn- por nada("")
+    
+            })
+        })
+    }
 
     get displayCalc() {
         return this._displayCalcEl.innerHTML;
@@ -86,3 +101,9 @@ class CalcController {
         this._currentDate = valor;
     }
 }
+
+
+
+
+
+
