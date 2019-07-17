@@ -1,21 +1,11 @@
-/* class é uma função
-    para dar o nome de uma class utilizamos a primeira letra de cada palavra em caixa alta
-    variável em uma classe se chama atributo
-    função dentro de uma classe se chama metodo
 
-    então basicamente uma classe é um conjunto de metodos e atributos
-
-
-
-
-*/
 class CalcController {
 
     constructor() {
-
+        this._operation = [];
         this._locale = "pt-BR"
         this._currentDate;
-        //Colocamos os nossos elementos na DOM como atributos 
+        
         this._displayCalcEl = document.querySelector("#display");
         this._timeEl = document.querySelector("#hora");
         this._dateEl = document.querySelector("#data");
@@ -27,19 +17,18 @@ class CalcController {
     initialize() {
         this.setDisplayDateTime();
 
-        //setInterval utilizado para atualizar a cada 1000 ms no caso 1 segundo...
+      
         setInterval(() => {
             this.setDisplayDateTime();
         }, 1000)
 
     }
 
-    //metodo usado para retornar data formatada utilizando o metodo toLocalDate/TimeString
+
     setDisplayDateTime() {
         this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
         this.displayDate = this.currentDate.toLocaleDateString(this._locale, {
-            //formatando as datas com os seguintes metodos
-            //Incluir anotações na documentação https://docs.w3cub.com/javascript/global_objects/date/tolocaledatestring/
+           
             day: "2-digit",
             month: "long",
             year: "numeric"
@@ -66,8 +55,7 @@ class CalcController {
 
 
 
-    // usamos o innerHTML para modificar e mostrar o valor de nosso elemento
-
+    
     addEventListenerAll(element, events, fn) {
 
         events.split(' ').forEach(event => {
@@ -76,7 +64,78 @@ class CalcController {
 
         });
 
+      
+
+
     }
+    setError(){
+        //enviamos pro display a mensagem error
+        this.displayCalc = "Error";
+    }
+    clearAll(){
+
+        //definimos a operação como vazia ou seja o limpar
+        this._operation = [];
+    }
+    clearEntry(){
+        //metodo nativo do js para excluir o ultimo elemento adicionado da lista
+this._operation.pop();
+    }
+
+    addOperation(value){
+        // metodo utilizado para acrescenta no array operation o valorde cada operação por exemplo cada botao digitado o valor sera iniciado neste array
+        
+        this._operation.push(value);
+        console.log(this._operation);
+    }
+
+    execBtn(value) {
+        //criando estrutura do switch
+        switch (value) {
+            case 'ac':
+                this.clearAll();
+                break;
+            case 'soma':
+                this.clearEntry();
+                break;
+            case 'subtracao':
+                this.clearEntry();
+                break;
+            case 'divisao':
+                this.clearEntry();
+                break;
+            case 'multiplicacao':
+                this.clearEntry();
+                break;
+            case 'porcento':
+                this.clearEntry();
+                break;
+            case 'igual':
+                this.clearEntry();
+                break;
+                        // os numeros vao ter o mesmo comportamento ou seja apenas o ultimo valor precisa ter break
+                    case '0':
+                    case '1': 
+                    case '2': 
+                    case '3': 
+                    case '4': 
+                    case '5': 
+                    case '6': 
+                    case '7': 
+                    case '8':
+                    case '9': 
+                     // populamos todo os numeros digitados
+                        this.addOperation(parseInt(value));
+                    break;
+                    
+
+                default:
+                    this.setError();
+
+                    
+        }
+    }
+
     initButtonsEvents() {
         //Quando há vários elementos em que nosso seletor indica,é necessário utilizar o querySelectorAll
         let buttons = document.querySelectorAll("#buttons>g,#parts>g");
@@ -84,8 +143,9 @@ class CalcController {
         //com o forEach percorremos nosso array definindo uma variavel e com ela definimos um evento
         buttons.forEach((btn, index) => {
             //o e seria toda a ação ocorrida no evento...
-            this.addEventListenerAll(btn, 'click drag mouseover', e => {
-                console.log(btn.className.baseVal.replace("btn-", ""));
+            this.addEventListenerAll(btn, 'click drag', e => {
+                let textBtn = btn.className.baseVal.replace("btn-", "");
+               this.execBtn(textBtn);
             }); //fim evento
 
         }); // fim foreach
